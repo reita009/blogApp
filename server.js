@@ -6,7 +6,7 @@ const categoriesController = require("./categories/CategoriesController");
 const articlesController = require("./articles/articlesController");
 const Article = require("./articles/Article");
 const Category = require("./categories/Category");
-//View ewngine
+//View engine
 app.set("view engine", "ejs");
 //Static
 app.use(express.static("public"));

@@ -4,6 +4,9 @@ include('../../partials/navbar.ejs') %>
 <div class="container">
   <hr />
   <h2>Categorias</h2>
+  <a class="btn btn-success" href="/admin/categories/new"
+    >Criar nova categoria</a
+  >
   <hr />
   <table class="table table-bordered">
     <thead>
@@ -15,18 +18,27 @@ include('../../partials/navbar.ejs') %>
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <th>1</th>
-        <th>java Script</th>
-        <th>java-Script</th>
-        <th></th>
-      </tr>
       <% categories.forEach(category => { %>
       <tr>
         <th><%= category.id %></th>
         <th><%= category.title %></th>
         <th><%= category.slug %></th>
-        <th></th>
+        <th>
+          <a
+            href="/admin/categories/edit/<%= category.id %>"
+            class="btn btn-warning"
+            >EDITAR</a
+          >
+          <form
+            onsubmit="confirmDelete(event,this)"
+            style="display: inline"
+            method="Post"
+            action="/categories/delete"
+          >
+            <input type="hidden" name="id" value="<%= category.id %>" />
+            <button class="btn btn-danger">DELETAR</button>
+          </form>
+        </th>
       </tr>
 
       <% }) %>
@@ -35,3 +47,13 @@ include('../../partials/navbar.ejs') %>
 </div>
 
 <%- include('../../partials/footer.ejs') %>
+
+<script>
+  const confirmDelete = (event, form) => {
+    event.preventDefault();
+    var decision = confirm("Deseja Deletar?");
+    if (decision) {
+      form.submit();
+    }
+  };
+</script>
