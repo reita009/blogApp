@@ -8,7 +8,8 @@ include('../../partials/navbar.ejs') %>
       <h2>Editar artigo</h2>
     </div>
     <div class="card-body">
-      <form action="/article/save" method="post">
+      <form action="/articles/update" method="post">
+        <input type="hidden" name="id" value="<%= article.id %>" />
         <input
           class="form-control"
           type="text"
@@ -25,9 +26,14 @@ include('../../partials/navbar.ejs') %>
         <br />
         <label>Categoria</label>
         <select name="category" class="form-control">
-          <% categories.forEach((category)=>{ %>
+          <% categories.forEach((category)=>{ %> <% if(category.id ==
+          article.categoryId){ %>
+          <option value="<%= category.id %>" selected>
+            <%= category.title %>
+          </option>
+          <% }else{ %>
           <option value="<%= category.id %>"><%= category.title %></option>
-          <% }) %>
+          <% }%> <% }) %>
         </select>
         <br />
         <button class="btn btn-success">Atualizar</button>
