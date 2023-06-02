@@ -6,7 +6,7 @@ const slugify = require("slugify");
 
 router.get("/admin/articles", (req, res) => {
   Article.findAll({
-    include: [{ model: Category }],
+    include: [{ model: Category, required: true }],
   }).then((articles) => {
     res.render("admin/articles/index", { articles });
   });
@@ -53,5 +53,25 @@ router.post("/articles/delete", (req, res) => {
     // SE FOR NULL
     res.redirect("/admin/articles");
   }
+});
+
+router.get("/admin/articles/edit/:id", (req, res) => {
+  var id = req.params.id;
+  Article.findByPk(id)
+    .then((article) => {
+      if (article != undefined) {
+        Category.findAll().then((categories) => {
+          res.render("admin/articles/edit", {
+            categories: categories,
+            article: article,
+          });
+        });
+      } else {
+        res.redirect("/");
+      }
+    })
+    .catch((err) => {
+      res.redirect("/");
+    });
 });
 module.exports = router;
