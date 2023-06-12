@@ -21,7 +21,7 @@ app.use(
   session({
     secret: "nicolbolas",
     cookie: {
-      maxAge: 30000,
+      maxAge: 86400000,
     },
   })
 );
